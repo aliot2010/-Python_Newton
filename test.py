@@ -2,4 +2,4 @@ import newton
 
 
 
-print(newton.doAlghorithm(6, 3, [1.,0.]))
+print(newton.doAlghorithm([1.,0.]))

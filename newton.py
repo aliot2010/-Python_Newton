@@ -24,18 +24,11 @@ def derivative(function, x1, x2, n):
         return (function(x1, x2 + dx) - function(x1, x2)) / dx
 
 
-# def derivative1():
-#
-# def derivative2():
-#
-# def derivative3():
-#
-# def derivative4():
 
-def doAlghorithm(n, T, y):
+def doAlghorithm(approach):
     e = 1e-9
-    A = numpy.zeros([2, 3])
-    R = numpy.zeros(2)
+    jacobi = numpy.zeros([2, 3])
+    vectorOfx = numpy.zeros(2)
     i = 0
     b1 = 0
     b2=0
@@ -43,29 +36,29 @@ def doAlghorithm(n, T, y):
     while 1 == 1:
         i += 1
 
-        A[0][0] = derivative(function1, y[0], y[1], 1)  # расчет матрицы якоби
-        A[0][1] = derivative(function1, y[0], y[1], 2)
-        A[0][2] = -function1(y[0], y[1])  # находим вектор невязки
-        A[1][0] = derivative(function2, y[0], y[1], 1)
-        A[1][1] = derivative(function2, y[0], y[1], 2)
-        A[1][2] = -function2(y[0], y[1])
+        jacobi[0][0] = derivative(function1, approach[0], approach[1], 1)  # расчет матрицы якоби
+        jacobi[0][1] = derivative(function1, approach[0], approach[1], 2)
+        jacobi[0][2] = -function1(approach[0], approach[1])  # находим вектор невязки
+        jacobi[1][0] = derivative(function2, approach[0], approach[1], 1)
+        jacobi[1][1] = derivative(function2, approach[0], approach[1], 2)
+        jacobi[1][2] = -function2(approach[0], approach[1])
         print("Итерация " + str(i))
-        print(y)
-        R = gauss.gaussFunc(A)  # решаем систему линейных алгебраических уравнений
+        print(approach)
+        vectorOfx = gauss.gaussFunc(jacobi)  # решаем систему линейных алгебраических уравнений
 
-        y[0] += R[0]
-        y[1] += R[1]
+        approach[0] += vectorOfx[0]
+        approach[1] += vectorOfx[1]
 
-        if math.fabs(function1(y[0], y[1])) > math.fabs(function2(y[0], y[1])):
-            b1 = math.fabs(function1(y[0], y[1]))
+        if math.fabs(function1(approach[0], approach[1])) > math.fabs(function2(approach[0], approach[1])):
+            b1 = math.fabs(function1(approach[0], approach[1]))
         else:
-            b1 = math.fabs(function2(y[0], y[1]))
+            b1 = math.fabs(function2(approach[0], approach[1]))
 
 
-        b2=math.fabs(R[0])
+        b2=math.fabs(vectorOfx[0])
         print(b2)
-        if b2<math.fabs(R[1]):
-            b2=math.fabs(R[1])
+        if b2<math.fabs(vectorOfx[1]):
+            b2=math.fabs(vectorOfx[1])
         # for j in range(len(R)):
         #
         #     if(math.fabs(R[j])>b2):
@@ -78,4 +71,4 @@ def doAlghorithm(n, T, y):
         print()
 
     print("ответ:")
-    return y
+    return approach
